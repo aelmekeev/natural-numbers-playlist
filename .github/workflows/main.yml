@@ -1,0 +1,12 @@
+on: [push]
+
+jobs:
+  validate_job:
+    runs-on: ubuntu-latest
+    name: validation job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Validate artists
+        uses: ./actions/validate-artists
+        id: artists

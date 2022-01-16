@@ -1,0 +1,5 @@
+name: 'Validate Artists'
+description: 'Validate that there are no duplicated artists in the playlist'
+runs:
+  using: 'node16'
+  main: 'index.js'
