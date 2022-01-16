@@ -1,8 +1,0 @@
-{
-  "name": "validate-artists",
-  "description": "Validate that there are no duplicated artists in the playlist",
-  "dependencies": {
-    "@actions/core": "^1.6.0",
-    "@actions/github": "^5.0.0"
-  }
-}

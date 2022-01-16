@@ -1,4 +1,3 @@
-const core = require('@actions/core')
 const fs = require('fs')
 
 const count = names =>
@@ -21,5 +20,5 @@ try {
     throw new Error(`The following artists are duplicated in the playlist: ${duplicatedArtists.join(', ')}`)
   }
 } catch (error) {
-  core.setFailed(error.message)
+  console.error(error.message)
 }
