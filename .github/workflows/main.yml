@@ -14,4 +14,4 @@ jobs:
         with:
           node-version: '16'
       - name: Validate artists
-        uses: node ./actions/validate-artists
+        run: node ./actions/validate-artists
