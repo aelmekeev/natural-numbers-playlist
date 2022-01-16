@@ -18,7 +18,7 @@ try {
   const allArtists = playlist.map(t => t.artist.split(',')).flat()
   const duplicatedArtists = duplicates(count(allArtists))
   if (duplicatedArtists.length > 0) {
-    throw `The following artists are duplicated in the playlist ${duplicatedArtists}`
+    throw new Error(`The following artists are duplicated in the playlist: ${duplicatedArtists.join(', ')}`)
   }
 } catch (error) {
   core.setFailed(error.message)
