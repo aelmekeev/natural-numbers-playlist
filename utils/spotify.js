@@ -36,6 +36,35 @@ const getTracks = (token, trackIds, callback) => {
   req.end()
 }
 
+const getPlaylist = (token, playlistId, callback) => {
+  const req = https.request({
+    ...baseOptions(token),
+    path: `/v1/playlists/${playlistId}`
+  }, res => {
+    let json = ''
+
+    res.on('data', chunk => {
+      json += chunk
+    })
+
+    res.on('end', () => {
+      if (res.statusCode === 200) {
+        callback(JSON.parse(json))
+      } else {
+        console.error('Error. Status: ', res.statusCode)
+      }
+    })
+  })
+
+  req.on('error', error => {
+    // do nothing
+  })
+  req.end()
+}
+
 module.exports = {
-  getTracks
+  getTracks,
+  getPlaylist,
+  // deleteTracks,
+  // addTracks
 }
