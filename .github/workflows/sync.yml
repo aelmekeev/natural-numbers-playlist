@@ -1,0 +1,12 @@
+name: Playlist sync
+
+on:
+  workflow_run:
+    workflows: [Validation]
+    types: [completed]
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'TODO'
