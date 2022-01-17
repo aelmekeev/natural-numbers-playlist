@@ -8,5 +8,14 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
-      - run: echo 'TODO'
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.workflow_run.head_branch }}
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - run: echo 'The triggering workflow passed'
