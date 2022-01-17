@@ -14,24 +14,24 @@ const options = {
 }
 
 const req = https.request(options, res => {
-  let json = '';
+  let json = ''
 
   res.on('data', chunk => {
-    json += chunk;
-  });
+    json += chunk
+  })
 
   res.on('end', () => {
     if (res.statusCode === 200) {
-      let data = JSON.parse(json);
+      let data = JSON.parse(json)
       process.stdout.write(JSON.stringify(data.tracks.items.map(i => ({
         id: i.track.id,
         name: i.track.name,
         artist: i.track.artists.reduce((acc, cur) => acc + cur.name, '')
       }))), null, 2)
     } else {
-      console.log('Error. Status: ', res.statusCode);
+      console.log('Error. Status: ', res.statusCode)
     }
-  });
+  })
 })
 
 req.on('error', error => {

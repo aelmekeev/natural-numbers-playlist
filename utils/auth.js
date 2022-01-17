@@ -15,15 +15,21 @@ const options = {
 
 const data = encodeURI('grant_type=client_credentials')
 
-const req = https.request(options, res => {
-  res.on('data', res => {
-    process.stdout.write(JSON.parse(res).access_token)
+const auth = async (callback) => {
+  const req = https.request(options, res => {
+    res.on('data', res => {
+      callback(JSON.parse(res).access_token)
+    })
   })
-})
 
-req.on('error', error => {
-  console.error(error)
-})
+  req.on('error', error => {
+    console.error(error)
+  })
 
-req.write(data)
-req.end()
+  req.write(data)
+  req.end()
+}
+
+module.exports = {
+  auth
+}

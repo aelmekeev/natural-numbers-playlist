@@ -17,3 +17,8 @@ jobs:
         run: node ./validate/validate-artists.js
       - name: Validate titles
         run: node ./validate/validate-titles.js
+      - name: Validate tracks metadata against Spotify
+        run: node ./validate/validate-metadata.js
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
