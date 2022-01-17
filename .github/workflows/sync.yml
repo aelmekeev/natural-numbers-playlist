@@ -4,8 +4,8 @@ on:
   workflow_run:
     workflows: [Validation]
     types: [completed]
-    branches:
-      - 'main'
+    # branches:       TODO
+    #   - 'main'
 
 jobs:
   on-success:
