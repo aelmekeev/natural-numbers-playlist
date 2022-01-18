@@ -23,4 +23,5 @@ jobs:
         with:
           path: ./auth.json
           key: spotify_access_token
-      - run: echo 'The triggering workflow passed'
+      - name: Sync playlist
+        run: node ./utils/sync.js
