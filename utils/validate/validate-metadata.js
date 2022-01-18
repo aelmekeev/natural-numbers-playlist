@@ -1,6 +1,6 @@
 const fs = require('fs')
-const spotifyAuth = require('../utils/auth')
-const spotify = require('../utils/spotify')
+const spotifyAuth = require('../auth')
+const spotify = require('../spotify')
 
 let root = process.env.GITHUB_WORKSPACE
 
