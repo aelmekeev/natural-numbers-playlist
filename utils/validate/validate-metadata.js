@@ -2,9 +2,7 @@ const fs = require('fs')
 const spotifyAuth = require('../auth')
 const spotify = require('../spotify')
 
-let root = process.env.GITHUB_WORKSPACE
-
-const data = fs.readFileSync(`${root}/playlist.json`, 'utf8')
+const data = fs.readFileSync(`${process.env.GITHUB_WORKSPACE}/playlist.json`, 'utf8')
 const playlist = JSON.parse(data)
 
 const validateMetadata = (trackIds, tracks) => {

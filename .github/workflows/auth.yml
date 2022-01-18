@@ -1,0 +1,27 @@
+name: Authorization
+
+on:
+  schedule:
+    - cron: '*/30 * * * *'
+
+jobs:
+  User authorization:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+      - name: Cache access token
+        uses: actions/cache@v2
+        with:
+          path: ./auth.json
+          key: spotify_access_token
+      - name:
+        run: node ./utils/refresh-auth.js
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+          SPOTIFY_REFRESH_TOKEN: ${{ secrets.SPOTIFY_REFRESH_TOKEN }}
