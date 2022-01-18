@@ -4,17 +4,16 @@
  */
 
 const fs = require('fs')
-const https = require('https')
 const spotifyAuth = require('./auth')
 const spotify = require('./spotify')
 
-const savePlaylist = playlist => {
-  const tracks = playlist.tracks.items.map(i => ({
+const savePlaylist = data => {
+  const tracks = data.map(i => ({
     id: i.track.id,
     name: i.track.name,
     artist: i.track.artists.reduce((acc, cur) => acc + cur.name, '')
   }))
-  fs.writeFile('./playlist.json', JSON.stringify(tracks, null, 2), err => {
+  fs.writeFile('./playlist.json', JSON.stringify(tracks, null, 4), err => {
     if (err) {
       console.error(err)
     }
@@ -22,7 +21,7 @@ const savePlaylist = playlist => {
 }
 
 const dumpPlaylist = token => {
-  spotify.getPlaylist(token, process.argv[2], savePlaylist)
+  spotify.getPlaylistTracks(token, process.argv[2], savePlaylist)
 }
 
 spotifyAuth.auth(dumpPlaylist)
