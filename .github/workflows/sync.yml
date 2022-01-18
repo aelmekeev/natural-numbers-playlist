@@ -1,14 +1,16 @@
 name: Playlist sync
 
 on:
+  push: # TODO
   workflow_run:
     workflows: [Validation]
     types: [completed]
+    branches: [main]
 
 jobs:
   sync:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -16,4 +18,9 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+      - name: Cache access token
+        uses: actions/cache@v2
+        with:
+          path: ./auth.json
+          key: spotify_access_token
       - run: echo 'The triggering workflow passed'

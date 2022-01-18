@@ -1,8 +1,8 @@
 const fs = require('fs')
-const spotifyAuth = require('./user-auth')
 const spotify = require('./spotify')
 
 const root = process.env.GITHUB_WORKSPACE
+const authFile = `${root}/auth.json`
 
 const PLAYLIST_ID = '3aMXF1tA7L1ml1XrEqpa0s'
 let AUTH_TOKEN = ''
@@ -18,9 +18,10 @@ const clear = tracks => {
   spotify.deleteTracksFromPlaylist(AUTH_TOKEN, PLAYLIST_ID, tracks.map(t => t.track.id), add)
 }
 
-const sync = token => {
-  AUTH_TOKEN = token
+try {
+  const auth = fs.readFileSync(authFile, 'utf8')
+  AUTH_TOKEN = JSON.parse(auth.access_token)
   spotify.getPlaylistTracks(AUTH_TOKEN, PLAYLIST_ID, clear)
+} catch {
+  throw new Error('Unable to read the cached auth.json.')
 }
-
-spotifyAuth.auth(sync)
