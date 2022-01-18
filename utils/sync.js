@@ -2,8 +2,6 @@ const fs = require('fs')
 const spotify = require('./spotify')
 
 const root = process.env.GITHUB_WORKSPACE
-const authFile = `${root}/auth.json`
-
 const PLAYLIST_ID = '3aMXF1tA7L1ml1XrEqpa0s'
 
 const add = () => {
@@ -17,6 +15,16 @@ const clear = tracks => {
   spotify.deleteTracksFromPlaylist(AUTH_TOKEN, PLAYLIST_ID, tracks.map(t => t.track.id), add)
 }
 
-const auth = fs.readFileSync(authFile, 'utf8')
+// TODO
+fs.readdirSync(root).forEach(file => {
+  console.log(file);
+});
+
+fs.readdirSync(`${root}/..`).forEach(file => {
+  console.log(file);
+});
+// TODO
+
+const auth = fs.readFileSync(`${root}/auth.json`, 'utf8')
 const AUTH_TOKEN = JSON.parse(auth).access_token
 spotify.getPlaylistTracks(AUTH_TOKEN, PLAYLIST_ID, clear)

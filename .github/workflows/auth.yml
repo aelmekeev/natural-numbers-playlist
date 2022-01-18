@@ -5,7 +5,7 @@ on:
     - cron: '*/30 * * * *'
 
 jobs:
-  User authorization:
+  Authorization:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
