@@ -1,6 +1,7 @@
 name: Authorization
 
 on:
+  push:
   schedule:
     - cron: '*/30 * * * *'
 
@@ -17,8 +18,8 @@ jobs:
       - name: Cache access token
         uses: actions/cache@v2
         with:
-          path: ./auth.json
-          key: spotify_access_token
+          path: ./natural-numbers-playlist/auth.json
+          key: spotify_access_token_2
       - name:
         run: node ./utils/refresh-auth.js
         env:

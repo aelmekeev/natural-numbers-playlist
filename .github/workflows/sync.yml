@@ -21,7 +21,7 @@ jobs:
       - name: Cache access token
         uses: actions/cache@v2
         with:
-          path: ./auth.json
-          key: spotify_access_token
+          path: ./natural-numbers-playlist/auth.json
+          key: spotify_access_token_2
       - name: Sync playlist
         run: node ./utils/sync.js
