@@ -1,12 +1,11 @@
 name: Authorization
 
 on:
-  push:
   schedule:
     - cron: '*/30 * * * *'
 
 jobs:
-  auth:
+  User authorization:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
