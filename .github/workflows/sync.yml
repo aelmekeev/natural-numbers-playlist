@@ -4,6 +4,7 @@ on:
   workflow_run:
     workflows: [Validation]
     types: [completed]
+    branches: [main]
 
 jobs:
   sync:
@@ -16,4 +17,10 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - run: echo 'The triggering workflow passed'
+      - name: Cache access token
+        uses: actions/cache@v2
+        with:
+          path: auth.json
+          key: access_token
+      - name: Sync playlist
+        run: node ./utils/sync.js
