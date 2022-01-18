@@ -18,7 +18,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: auth.json
-          key: spotify_access_token_3
+          key: access_token
       - name:
         run: node ./utils/refresh-auth.js
         env:
