@@ -20,7 +20,7 @@ const clear = tracks => {
 
 try {
   const auth = fs.readFileSync(authFile, 'utf8')
-  AUTH_TOKEN = JSON.parse(auth.access_token)
+  AUTH_TOKEN = JSON.parse(auth).access_token
   spotify.getPlaylistTracks(AUTH_TOKEN, PLAYLIST_ID, clear)
 } catch {
   throw new Error('Unable to read the cached auth.json.')
