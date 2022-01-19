@@ -11,7 +11,7 @@ const savePlaylist = data => {
   const tracks = data.map(i => ({
     id: i.track.id,
     name: i.track.name,
-    artist: i.track.artists.reduce((acc, cur) => acc + cur.name, '')
+    artist: i.track.artists.map(a => a.name).join(', ')
   }))
   fs.writeFile('./playlist.json', JSON.stringify(tracks, null, 4), err => {
     if (err) {

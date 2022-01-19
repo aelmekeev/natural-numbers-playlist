@@ -16,7 +16,7 @@ const validateMetadata = (trackIds, tracks) => {
   for (const trackId of trackIds) {
     const localTrack = playlist.find(t => t.id == trackId)
     const spotifyTrack = tracks.find(t => t.id == trackId)
-    const spotifyTrackArtists = spotifyTrack.artists.reduce((acc, cur) => acc + cur.name, '')
+    const spotifyTrackArtists = spotifyTrack.artists.map(a => a.name).join(', ')
     if (localTrack.name != spotifyTrack.name || localTrack.artist != spotifyTrackArtists) {
       batchHasErrors = true
       console.log(`For song 'https://open.spotify.com/track/${trackId}' name per Spotify is '${spotifyTrack.name}' and artists are '${spotifyTrackArtists}'`)

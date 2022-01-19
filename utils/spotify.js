@@ -44,7 +44,7 @@ const getPlaylistTracks = (token, playlistId, callback, tracks = [], next = null
 
   const req = https.request({
     ...baseOptions(token),
-    path: next ? next : `/v1/playlists/${playlistId}/tracks?fields=items(track(id,name,artists(name))),next`
+    path: next ? next : `/v1/playlists/${playlistId}/tracks?fields=items(track(id,name,popularity,artists(name))),next`
   }, res => {
     let json = ''
 
