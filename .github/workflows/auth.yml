@@ -1,9 +1,8 @@
 name: Authorization
 
 on:
-  push:
   schedule:
-    - cron: '*/30 * * * *'
+    - cron: '*/20 * * * *'
 
 jobs:
   Authorization:
