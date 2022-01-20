@@ -1,6 +1,7 @@
 name: Authorization
 
 on:
+  push: # TODO
   schedule:
     - cron: '*/20 * * * *'
 
