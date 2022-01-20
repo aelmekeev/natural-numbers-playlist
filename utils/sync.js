@@ -1,8 +1,9 @@
 const fs = require('fs')
 const spotify = require('./spotify')
+const config = require('./config')
 
 const root = process.env.GITHUB_WORKSPACE
-const PLAYLIST_ID = '3aMXF1tA7L1ml1XrEqpa0s'
+const PLAYLIST_ID = config.playlistId
 
 const add = () => {
   const data = fs.readFileSync(`${root}/playlist.json`, 'utf8')

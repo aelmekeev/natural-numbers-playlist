@@ -18,12 +18,17 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
-      - name: Validate artists
-        run: node ./utils/validate/validate-artists.js
       - name: Validate titles
         run: node ./utils/validate/validate-titles.js
+      - name: Validate artists
+        run: node ./utils/validate/validate-artists.js
       - name: Validate tracks metadata against Spotify
         run: node ./utils/validate/validate-metadata.js
+        env:
+          SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
+          SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}
+      - name: Validate artists popularity on Spotify
+        run: node ./utils/validate/validate-popularity.js
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}

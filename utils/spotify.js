@@ -12,10 +12,13 @@ const baseOptions = token => ({
   headers: baseHeaders(token)
 })
 
-const getTracks = (token, trackIds, callback) => {
+const getTracks = (token, trackIds, callback, tracks = []) => {
+  const LIMIT = 50
+
+  const requestedTracksIds = trackIds.slice(0, LIMIT)
   const req = https.request({
     ...baseOptions(token),
-    path: `/v1/tracks?ids=${trackIds.join(',')}`
+    path: `/v1/tracks?ids=${requestedTracksIds.join(',')}`
   }, res => {
     let json = ''
 
@@ -26,9 +29,63 @@ const getTracks = (token, trackIds, callback) => {
     res.on('end', () => {
       if (res.statusCode === 200) {
         let data = JSON.parse(json)
-        callback(trackIds, data.tracks)
+
+        if (requestedTracksIds.length != data.tracks.length) {
+          const missingTracksIds = requestedTracksIds.filter(tId => !data.tracks.map(t => t.id).includes(tId));
+          throw new Error(`Not all the tracks can be found in Spotify. Missing tracks ids: ${missingTracksIds.join(', ')}`)
+        }
+
+        const accumulatedTracks = tracks.concat(data.tracks)
+        if (trackIds.length > requestedTracksIds.length) {
+          getTracks(token, trackIds.slice(LIMIT), callback, accumulatedTracks)
+        } else {
+          console.log(`Received ${accumulatedTracks.length} tracks.`)
+          callback(accumulatedTracks)
+        }
       } else {
         console.error('Error while getting tracks. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
+      }
+    })
+  })
+
+  req.on('error', error => {
+    // do nothing
+  })
+  req.end()
+}
+
+const getArtists = (token, artistIds, callback, artists = []) => {
+  const LIMIT = 50
+
+  const requestedArtistsIds = artistIds.slice(0, LIMIT)
+  const req = https.request({
+    ...baseOptions(token),
+    path: `/v1/artists?ids=${requestedArtistsIds.join(',')}`
+  }, res => {
+    let json = ''
+
+    res.on('data', chunk => {
+      json += chunk
+    })
+
+    res.on('end', () => {
+      if (res.statusCode === 200) {
+        let data = JSON.parse(json)
+
+        if (requestedArtistsIds.length != data.artists.length) {
+          const missingArtistsIds = requestedArtistsIds.filter(aId => !data.artists.map(t => t.id).includes(aId));
+          throw new Error(`Not all the artists were found in Spotify. Missing artist ids: ${missingArtistsIds.join(', ')}`)
+        }      
+
+        const accumulatedArtists = artists.concat(data.artists)
+        if (artistIds.length > requestedArtistsIds.length) {
+          getArtists(token, artistIds.slice(LIMIT), callback, accumulatedArtists)
+        } else {
+          console.log(`Received ${accumulatedArtists.length} artists.`)
+          callback(accumulatedArtists)
+        }
+      } else {
+        console.error('Error while getting artists. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
       }
     })
   })
@@ -44,7 +101,7 @@ const getPlaylistTracks = (token, playlistId, callback, tracks = [], next = null
 
   const req = https.request({
     ...baseOptions(token),
-    path: next ? next : `/v1/playlists/${playlistId}/tracks?fields=items(track(id,name,popularity,artists(name))),next`
+    path: next ? next : `/v1/playlists/${playlistId}/tracks?fields=items(track(id,name,artists(id,name))),next`
   }, res => {
     let json = ''
 
@@ -60,6 +117,7 @@ const getPlaylistTracks = (token, playlistId, callback, tracks = [], next = null
         if (data.next) {
           getPlaylistTracks(token, playlistId, callback, accumulatedTracks, data.next)
         } else {
+          console.log(`Received ${accumulatedTracks.length} tracks.`)
           callback(accumulatedTracks)
         }
       } else {
@@ -161,6 +219,7 @@ const addTracksToPlaylist = (token, playlistId, trackIds, callback) => {
 
 module.exports = {
   getTracks,
+  getArtists,
   getPlaylistTracks,
   deleteTracksFromPlaylist,
   addTracksToPlaylist
