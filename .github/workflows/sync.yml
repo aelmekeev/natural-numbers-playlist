@@ -1,6 +1,7 @@
 name: Playlist sync
 
 on:
+  push: # TODO
   workflow_run:
     workflows: [Validation]
     types: [completed]
