@@ -1,6 +1,7 @@
 name: Authorization
 
 on:
+  push: # TODO
   schedule:
     - cron: '*/20 * * * *'
 
@@ -18,7 +19,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: auth.json
-          key: access_token
+          key: user_access_token_${{ github.run_number }}
       - name:
         run: node ./utils/refresh-auth.js
         env:

@@ -28,7 +28,7 @@ const getTracks = (token, trackIds, callback) => {
         let data = JSON.parse(json)
         callback(trackIds, data.tracks)
       } else {
-        console.error('Error while getting tracks. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
+        throw new Error('Error while getting tracks. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
       }
     })
   })
@@ -63,7 +63,7 @@ const getPlaylistTracks = (token, playlistId, callback, tracks = [], next = null
           callback(accumulatedTracks)
         }
       } else {
-        console.error('Error while getting playlist tracks. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
+        throw new Error('Error while getting playlist tracks. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
       }
     })
   })
@@ -107,7 +107,7 @@ const deleteTracksFromPlaylist = (token, playlistId, trackIds, callback) => {
           callback()
         }
       } else {
-        console.error('Error while deleting tracks from playlist. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
+        throw new Error('Error while deleting tracks from playlist. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
       }
     })
   })
@@ -147,7 +147,7 @@ const addTracksToPlaylist = (token, playlistId, trackIds, callback) => {
           callback()
         }
       } else {
-        console.error('Error while adding tracks to playlist. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
+        throw new Error('Error while adding tracks to playlist. Status: ', res.statusCode, ' ', JSON.stringify(JSON.parse(json), null, 2))
       }
     })
   })
