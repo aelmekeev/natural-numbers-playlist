@@ -6,13 +6,10 @@
 const fs = require('fs')
 const spotifyAuth = require('./auth')
 const spotify = require('./spotify')
+const utils = require('./utils')
 
 const savePlaylist = data => {
-  const tracks = data.map(i => ({
-    id: i.track.id,
-    name: i.track.name,
-    artist: i.track.artists.map(a => a.name).join(', ')
-  }))
+  const tracks = data.map(i => utils.dehydrateTrack(i.track))
   fs.writeFile('./playlist.json', JSON.stringify(tracks, null, 4), err => {
     if (err) {
       console.error(err)

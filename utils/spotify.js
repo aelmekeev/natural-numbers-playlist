@@ -1,4 +1,5 @@
 const https = require('https')
+const config = require('./config.js')
 
 const baseHeaders = token => ({
   'Authorization': `Bearer ${token}`,
@@ -97,8 +98,6 @@ const getArtists = (token, artistIds, callback, artists = []) => {
 }
 
 const getPlaylistTracks = (token, playlistId, callback, tracks = [], next = null) => {
-  const LIMIT = 50
-
   const req = https.request({
     ...baseOptions(token),
     path: next ? next : `/v1/playlists/${playlistId}/tracks?fields=items(track(id,name,artists(id,name))),next`
@@ -217,10 +216,44 @@ const addTracksToPlaylist = (token, playlistId, trackIds, callback) => {
   req.end()
 }
 
+const searchForTracks = (token, searchQuery, callback, tracks = [], next = null) => {
+  const req = https.request({
+    ...baseOptions(token),
+    path: next ? next : `/v1/search?type=track&q=${encodeURI(searchQuery)}`
+  }, res => {
+    let json = ''
+
+    res.on('data', chunk => {
+      json += chunk
+    })
+
+    res.on('end', () => {
+      if (res.statusCode === 200) {
+        const data = JSON.parse(json)
+
+        const accumulatedTracks = tracks.concat(data.tracks.items)
+        if (accumulatedTracks.length < config.searchLimit && data.tracks.next) {
+          searchForTracks(token, searchQuery, callback, accumulatedTracks, data.tracks.next)
+        } else {
+          callback(accumulatedTracks)
+        }
+      } else {
+        throw new Error('Error while searching tracks. Status: ', json)
+      }
+    })
+  })
+
+  req.on('error', error => {
+    // do nothing
+  })
+  req.end()
+}
+
 module.exports = {
   getTracks,
   getArtists,
   getPlaylistTracks,
   deleteTracksFromPlaylist,
-  addTracksToPlaylist
+  addTracksToPlaylist,
+  searchForTracks
 }
