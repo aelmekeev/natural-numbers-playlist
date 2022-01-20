@@ -1,6 +1,7 @@
 name: Playlist sync
 
 on:
+  push: # TODO
   workflow_run:
     workflows: [Validation]
     types: [completed]
@@ -9,7 +10,7 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -21,7 +22,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: auth.json
-          key: user_access_token
+          key: dummy_key_${{ github.run_number }}
           restore-keys: user_access_token
       - name: Sync playlist
         run: node ./utils/sync.js
