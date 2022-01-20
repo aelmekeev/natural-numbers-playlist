@@ -12,7 +12,7 @@ All you need to build a playlist of songs with the natural numbers as names. Her
 2. Playlist includes only songs with lyrics.
    * Non-english lyrics are allowed unless they marked as explicit.
 3. No duplicates among artists.
-4. [Track popularity](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-several-tracks) should be at least `10`.
+4. [Artist popularity](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-artists-top-tracks) should be at least `25`.
 
 ## Contribution
 
