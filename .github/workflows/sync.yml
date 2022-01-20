@@ -21,6 +21,7 @@ jobs:
         uses: actions/cache@v2
         with:
           path: auth.json
-          key: access_token
+          key: dummy_key_${{ github.run_number }}
+          restore-keys: user_access_token
       - name: Sync playlist
         run: node ./utils/sync.js
