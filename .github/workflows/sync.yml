@@ -1,7 +1,6 @@
 name: Playlist sync
 
 on:
-  push: # TODO
   workflow_run:
     workflows: [Validation]
     types: [completed]
@@ -10,7 +9,7 @@ on:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    # if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
         uses: actions/checkout@v2
