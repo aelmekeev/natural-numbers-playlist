@@ -1,7 +1,7 @@
 const fs = require('fs')
-const spotifyAuth = require('../auth')
-const spotify = require('../spotify')
-const config = require('../config')
+const spotifyAuth = require('../spotify/auth')
+const spotify = require('../spotify/spotify')
+const config = require('../spotify/config')
 
 AUTH_TOKEN = ''
 

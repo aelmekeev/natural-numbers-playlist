@@ -20,7 +20,7 @@ jobs:
           path: auth.json
           key: user_access_token_${{ github.run_number }}
       - name:
-        run: node ./utils/refresh-auth.js
+        run: node ./utils/spotify/refresh-auth.js
         env:
           SPOTIFY_CLIENT_ID: ${{ secrets.SPOTIFY_CLIENT_ID }}
           SPOTIFY_CLIENT_SECRET: ${{ secrets.SPOTIFY_CLIENT_SECRET }}

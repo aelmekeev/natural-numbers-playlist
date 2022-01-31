@@ -29,14 +29,7 @@ const dehydrateTitle = title => title
   .replace(/remastered|2\d{3}|19\d{2}/g, '')  // add any strings agreed to ignore here
   .replace(/\W/g, '')
 
-const dehydrateTrack = track => ({
-  id: track.id,
-  name: track.name,
-  artist: track.artists.map(a => a.name).join(', ')
-})
-
 module.exports = {
   convertNumberToWords,
-  dehydrateTitle,
-  dehydrateTrack
+  dehydrateTitle
 }
