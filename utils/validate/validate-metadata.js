@@ -1,6 +1,6 @@
 const fs = require('fs')
-const spotifyAuth = require('../auth')
-const spotify = require('../spotify')
+const spotifyAuth = require('../spotify/auth')
+const spotify = require('../spotify/spotify')
 
 const data = fs.readFileSync(`${process.env.GITHUB_WORKSPACE}/playlist.json`, 'utf8')
 const playlist = JSON.parse(data)
