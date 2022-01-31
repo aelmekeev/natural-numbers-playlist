@@ -35,7 +35,8 @@ This repository contains:
 The following can be run to dump an existing public playlist to `playlist.json`.
 
 ```
-SPOTIFY_CLIENT_ID=<client_id> SPOTIFY_CLIENT_SECRET=<client_secret> node ./utils/dump-playlist.js <playlist_id>
+SPOTIFY_CLIENT_ID=<client_id> SPOTIFY_CLIENT_SECRET=<client_secret> node ./utils/spotify/dump-playlist.js <playlist_id>
+YOUTUBE_API_KEY=<youtube api key> node ./utils/youtube/enrich-playlist.js <playlist id>
 ```
 
 The following URL can be used to generate authorization code for the user authorization flow.
