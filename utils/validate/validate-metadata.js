@@ -12,7 +12,7 @@ const validateMetadata = tracks => {
     const spotifyTrackArtists = spotifyTrack.artists.map(a => a.name).join(', ')
     if (localTrack.name != spotifyTrack.name || localTrack.artist != spotifyTrackArtists) {
       hasErrors = true
-      console.log(`For song 'https://open.spotify.com/track/${trackId}' name per Spotify is '${spotifyTrack.name}' and artists are '${spotifyTrackArtists}'`)
+      console.log(`For song 'https://open.spotify.com/track/${spotifyTrack.id}' name per Spotify is '${spotifyTrack.name}' and artists are '${spotifyTrackArtists}'`)
     }
   }
 
