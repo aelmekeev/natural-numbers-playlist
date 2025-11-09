@@ -35,7 +35,7 @@ const analyseResults = foundTracks => {
       popularity: t.popularity,
       artists: t.artists.map(a => a.id).join(',')
     }))
-    .filter(t => t.popularity > 15)
+    .filter(t => t.popularity >= 25)
     .filter(t => [number, dehydratedNumberAsText].includes(utils.dehydrateTitle(t.name)))
     .sort((a, b) => b.popularity - a.popularity)
   )
