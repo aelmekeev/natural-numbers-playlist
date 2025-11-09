@@ -12,13 +12,13 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v5
       - name: Install Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v6
         with:
           node-version: '16'
       - name: Cache access token
-        uses: actions/cache@v2
+        uses: actions/cache@v4
         with:
           path: auth.json
           key: dummy_key_${{ github.run_number }}
