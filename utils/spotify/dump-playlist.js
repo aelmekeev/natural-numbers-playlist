@@ -6,7 +6,7 @@
 const fs = require('fs')
 const spotifyAuth = require('./auth')
 const spotify = require('./spotify')
-const utils = require('../utils')
+const utils = require('./utils')
 
 const savePlaylist = data => {
   const tracks = data.map(i => utils.dehydrateTrack(i.track))

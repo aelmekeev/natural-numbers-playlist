@@ -10,9 +10,8 @@ All you need to build a playlist of songs with the natural numbers as names. Her
    * Special characters are ignored, so `'79` and `5'1` are considered valid for `79` and `51` respectively.
    * "Remastered" and "Year of Remastered" are ignored, so `'39 - Remastered 2011` is considered valid for `39`.
 2. Playlist includes only songs with lyrics.
-   * Non-english lyrics are allowed unless they marked as explicit.
 3. No duplicates among artists.
-4. [Artist popularity](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-artists-top-tracks) should be at least `25`.
+4. [Artist popularity](https://developer.spotify.com/documentation/web-api/reference/#/operations/get-an-artists-top-tracks) should be at least `15`.
 
 ## Contribution
 
